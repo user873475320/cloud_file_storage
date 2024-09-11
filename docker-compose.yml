@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+#  app:
+#    build:
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - db
+#      - cache
+#      - minio
+#    ports:
+#      - '8080:8080'
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/cloudFileStorageDB
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  postgres:
+    image: postgres
+    ports:
+      - "8083:5432"
+    environment:
+      POSTGRES_DB: cloudFileStorageDB
+      POSTGRES_USER: postgres
+
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  minio:
+    image: 'bitnami/minio'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=minio-root-user
+      - MINIO_ROOT_PASSWORD=minio-root-password
+    volumes:
+      - minio_data:/data
+
+volumes:
+  db_data:
+  redis_data:
+  minio_data:
