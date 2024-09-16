@@ -20,6 +20,7 @@ public class User {
     private String username;
 
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Column(nullable = false)
     private String password;
 }
