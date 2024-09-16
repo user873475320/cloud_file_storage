@@ -10,7 +10,7 @@ import ru.storage.validation.annotation.UniqueUsername;
 @NoArgsConstructor
 @AllArgsConstructor
 @PasswordMatches
-public class UserRegistrationDTO {
+public class UserRegistrationDTO implements UserDTO {
     @Size(min = 3, max = 100, message = "Username length must be between 3 and 100 characters")
     @NotBlank(message = "Username can not be empty")
     @UniqueUsername
