@@ -3,28 +3,32 @@ package ru.storage.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.cors.CorsConfiguration;
 import ru.storage.security.CustomUserDetailsService;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final AccessDeniedHandler accessDeniedHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors ->
+                        cors.configurationSource(request ->
+                                new CorsConfiguration().applyPermitDefaultValues()))
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
                         .requestMatchers("/", "/auth/login", "/auth/process_login", "/auth/registration", "/auth/process_registration").not().authenticated()
@@ -38,7 +42,8 @@ public class SecurityConfig {
                         .logoutUrl("/auth/logout")
                         .logoutSuccessUrl("/auth/login?logout"))
                 .exceptionHandling(ex -> ex
-                        .accessDeniedHandler(accessDeniedHandler))
+                        .accessDeniedHandler(accessDeniedHandler)
+                        .authenticationEntryPoint(authenticationEntryPoint))
                 .userDetailsService(userDetailsService);
 
         return http.build();
