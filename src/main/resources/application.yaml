@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: cloud_file_storage
+  datasource:
+    url: jdbc:postgresql://localhost:8083/cloudFileStorageDB
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    show-sql: true
+
+  mvc:
+    hiddenmethod.filter.enabled: true
+
+logging.level.org.springframework.security: debug
