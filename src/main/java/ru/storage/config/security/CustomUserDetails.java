@@ -1,4 +1,4 @@
-package ru.storage.security;
+package ru.storage.config.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
