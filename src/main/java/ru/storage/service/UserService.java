@@ -3,9 +3,13 @@ package ru.storage.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.storage.config.security.CustomUserDetails;
 import ru.storage.dto.UserDTO;
 import ru.storage.entity.User;
 import ru.storage.exception.RepositoryException;
@@ -15,9 +19,15 @@ import ru.storage.repository.UserRepository;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return new CustomUserDetails(userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found")));
+    }
 
     @Transactional
     public boolean save(UserDTO userDTO) {
