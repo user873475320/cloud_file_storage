@@ -90,6 +90,10 @@
     Please login or registrate a new account first to access this page.
 </div>
 
+<div th:if="${param.loginAgain}" class="banner">
+    Your sessions have expired. Please log in again!
+</div>
+
 <div class="container">
     <h1>Welcome!</h1>
     <div class="greeting-text">
