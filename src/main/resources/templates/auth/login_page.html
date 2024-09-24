@@ -4,94 +4,7 @@
     <title>Please Log In</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background: url('/img/background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
-        }
-
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            width: 300px;
-        }
-
-        h1 {
-            font-size: 2.2em;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .message {
-            font-size: 1em;
-            color: red;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            background-color: #28a745;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #218838;
-        }
-
-        .register-text {
-            margin-top: 20px;
-            font-size: 1em;
-            color: #333;
-        }
-
-        .register-link {
-            display: block;
-            margin-top: 10px;
-            text-decoration: none;
-            background-color: #007bff;
-            color: white;
-            padding: 12px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
-
-        .register-link:hover {
-            background-color: #0056b3;
-        }
-
-        .notification {
-            margin-bottom: 20px;
-            font-size: 1em;
-            color: green;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/auth/loginAndRegistrationPageStyles.css">
 </head>
 <body>
 <div class="container">
@@ -105,6 +18,7 @@
     <div th:if="${param.success}" class="notification">
         You have successfully registered. Please log in now.
     </div>
+
     <form th:action="@{/auth/process_login}" method="post">
         <div>
             <input type="text" name="username" placeholder="Username" required/>
@@ -112,11 +26,11 @@
         <div>
             <input type="password" name="password" placeholder="Password" required/>
         </div>
-        <input type="submit" value="Log in" />
+        <button type="submit">Log in</button>
     </form>
 
-    <div class="register-text">Not registered yet?</div>
-    <a href="/auth/registration" class="register-link">Register Now</a>
+    <div class="text">Not registered yet?</div>
+    <a href="/auth/registration" class="link">Register Now</a>
 </div>
 </body>
 </html>
