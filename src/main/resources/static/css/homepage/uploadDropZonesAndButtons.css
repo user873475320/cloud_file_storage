@@ -1,0 +1,52 @@
+.upload-buttons {
+    display: flex;
+}
+
+.upload-buttons .btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-buttons .btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.upload-buttons .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Hide input elements */
+#file-input, #folder-input {
+    display: none;
+}
+
+.dropzones-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Adjusts the space between the drop zones */
+}
+
+.file-dropzone, .folder-dropzone {
+    flex: 1;
+    border: 2px dashed #007bff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.file-dropzone {
+    background-color: #f0f8ff;
+}
+
+.folder-dropzone {
+    background-color: #f0fff0;
+}

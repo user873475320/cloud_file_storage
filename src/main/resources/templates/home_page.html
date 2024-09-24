@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Cloud Storage</title>
+    <link rel="stylesheet" href="/css/homepage/layout.css">
+    <link rel="stylesheet" href="/css/homepage/navbar.css">
+    <link rel="stylesheet" href="/css/homepage/breadcrumbs.css">
+    <link rel="stylesheet" href="/css/homepage/searchBar.css">
+    <link rel="stylesheet" href="/css/homepage/uploadDropZonesAndButtons.css">
+    <link rel="stylesheet" href="/css/homepage/table.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="username" id="username" th:text="${'Welcome, ' + username}">Welcome, usereeeeeeeeeeeeeeeeee</div>
+    <div class="button-group">
+        <button class="home" onclick="goHome()">
+            <img src="/img/home.svg" alt="Home Icon">
+        </button>
+        <button class="logout" onclick="logout()">
+            <img src="/img/log-out.svg" alt="Logout Icon">
+        </button>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Breadcrumbs Section -->
+    <div class="breadcrumbs-container">
+        <div class="breadcrumbs">
+            <img src="/img/folder.svg" alt="Folder Icon">
+            <a th:href="@{/home}">Root folder</a>
+            <span>&gt;</span>
+            <th:block th:each="folder, iterStat : ${breadcrumbFolders}">
+                <a th:href="@{/home(path=${folder.encodedPath})}" th:text="${folder.name}">Folder Name</a>
+                <span th:if="${!iterStat.last}">&gt;</span>
+            </th:block>
+        </div>
+
+        <!-- Upload buttons with only icons -->
+        <div class="upload-buttons">
+            <!-- Folder Upload Button -->
+            <button class="btn upload-btn" onclick="document.getElementById('folder-input').click()">
+                <img src="/img/folder-plus.svg" alt="Upload Folder Icon">
+            </button>
+            <!-- File Upload Button -->
+            <button class="btn upload-btn" onclick="document.getElementById('file-input').click()">
+                <img src="/img/file-plus.svg" alt="Upload File Icon">
+            </button>
+        </div>
+    </div>
+
+    <!-- Hidden input elements for file and folder uploads -->
+    <input type="file" id="file-input" multiple onchange="uploadFiles(this.files)">
+    <input type="file" id="folder-input" webkitdirectory directory onchange="uploadFolder(this.files)">
+
+    <div class="search-container">
+        <div class="search-bar">
+            <img src="/img/search.svg" alt="search"/>
+            <input type="text" placeholder="Search Objects">
+        </div>
+        <button class="btn delete-btn">Delete Selected</button>
+    </div>
+
+    <div class="dropzones-container">
+        <div class="file-dropzone" id="fileDropZone">
+            <p>Drop files here</p>
+        </div>
+        <div class="folder-dropzone" id="folderDropZone">
+            <p>Drop folders here</p>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Name</th>
+            <th>Uploaded</th>
+            <th>Size</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="file : ${files}">
+            <td><input type="checkbox"></td>
+            <td>
+                <!-- File Icon -->
+                <img th:src="${'/img/' + file.iconName}" alt="type-icon" class="type-icon">
+                <!-- File Name -->
+                <<span class="file-name" th:text="${file.name}">File Name</span>
+            </td>
+            <td th:text="${file.uploadDate}">Upload Date</td>
+            <td th:text="${file.size}">File Size</td>
+            <td class="options">
+                <button type="button" title="Rename">
+                    <img src="/img/edit-3.svg" alt="rename">
+                </button>
+                <!-- Download Button -->
+                <button type="button" title="Download">
+                    <img src="/img/download.svg" alt="download">
+                </button>
+                <!-- Delete Button -->
+                <button type="button" title="Delete">
+                    <img src="/img/trash-2.svg" alt="delete">
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/uploadHandler.js"></script>
+<script src="/js/dragDropHandler.js"></script>
+<script src="/js/navbarHandler.js"></script>
+
+
+</body>
+</html>
