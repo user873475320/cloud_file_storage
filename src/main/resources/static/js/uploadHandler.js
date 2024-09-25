@@ -1,5 +1,5 @@
 // Function to handle file uploads
-function uploadFiles(files) {
+function uploadFiles(files, currentPath) {
     const formData = new FormData();
 
     // Add each file to the form data
@@ -7,6 +7,8 @@ function uploadFiles(files) {
         formData.append('files', file); // 'files[]' is the name under which files will be sent
         console.log('Preparing to upload file:', file.name);
     }
+
+    formData.append('path', currentPath);
 
     // Send the form data to the server
     fetch('/upload/file', { // Adjust this URL to your backend endpoint
@@ -25,7 +27,7 @@ function uploadFiles(files) {
 }
 
 // Function to handle folder uploads
-function uploadFolder(files) {
+function uploadFolder(files, currentPath) {
     const formData = new FormData();
 
     // Add each file in the folder to the form data
@@ -34,6 +36,8 @@ function uploadFolder(files) {
         formData.append('files', file, file.webkitRelativePath);
         console.log('Preparing to upload file from folder:', file.webkitRelativePath);
     }
+
+    formData.append('path', currentPath);
 
     // Send the form data to the server
     fetch('/upload/folder', { // Adjust this URL to your backend endpoint
