@@ -56,8 +56,8 @@
     </div>
 
     <!-- Hidden input elements for file and folder uploads -->
-    <input type="file" id="file-input" multiple onchange="uploadFiles(this.files)">
-    <input type="file" id="folder-input" webkitdirectory directory onchange="uploadFolder(this.files)">
+    <input type="file" id="file-input" multiple onchange="uploadFiles(this.files, currentPath)">
+    <input type="file" id="folder-input" webkitdirectory directory onchange="uploadFolder(this.files, currentPath)">
 
     <div class="search-container">
         <div class="search-bar">
@@ -81,21 +81,45 @@
         <tr>
             <th>Select</th>
             <th>Name</th>
-            <th>Uploaded</th>
+            <th>Last Modified</th>
             <th>Size</th>
             <th>Options</th>
         </tr>
         </thead>
         <tbody>
+        <tr th:each="dir : ${directories}">
+            <td><input type="checkbox"></td>
+            <td>
+                <!-- File Icon -->
+                <img src="/img/folder.svg" alt="type-icon" class="type-icon">
+                <!-- File Name -->
+                <a class="folder-name" th:href="@{'/home?path=' + ${dir.getEncodedPath()}}" th:text="${dir.name}">Directory Name</a>
+            </td>
+            <td></td>
+            <td>-</td>
+            <td class="options">
+                <button type="button" title="Rename">
+                    <img src="/img/edit-3.svg" alt="rename">
+                </button>
+                <!-- Download Button -->
+                <button type="button" title="Download">
+                    <img src="/img/download.svg" alt="download">
+                </button>
+                <!-- Delete Button -->
+                <button type="button" title="Delete">
+                    <img src="/img/trash-2.svg" alt="delete">
+                </button>
+            </td>
+        </tr>
         <tr th:each="file : ${files}">
             <td><input type="checkbox"></td>
             <td>
                 <!-- File Icon -->
-                <img th:src="${'/img/' + file.iconName}" alt="type-icon" class="type-icon">
+                <img th:src="${'/img/' + file.icon.iconFileName}" alt="type-icon" class="type-icon">
                 <!-- File Name -->
-                <<span class="file-name" th:text="${file.name}">File Name</span>
+                <span class="file-name" th:text="${file.fileName}">File Name</span>
             </td>
-            <td th:text="${file.uploadDate}">Upload Date</td>
+            <td th:text="${file.lastModifiedDate}">Last Modified</td>
             <td th:text="${file.size}">File Size</td>
             <td class="options">
                 <button type="button" title="Rename">
@@ -119,6 +143,12 @@
 <script src="/js/dragDropHandler.js"></script>
 <script src="/js/navbarHandler.js"></script>
 
+<script th:inline="javascript">
+    const currentPath = /*[[@{${currentPath}}]]*/ '';
+
+    initializeFileDropZone(currentPath);
+    initializeFolderDropZone(currentPath);
+</script>
 
 </body>
 </html>
