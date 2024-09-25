@@ -14,7 +14,10 @@
 <body>
 
 <div class="navbar">
-    <div class="username" id="username" th:text="${'Welcome, ' + username}">Welcome, usereeeeeeeeeeeeeeeeee</div>
+    <div class="icon-container">
+        <img src="/img/cloud.svg" alt="Cloud Icon" class="cloud-icon">
+    </div>
+    <div class="username" id="username" th:text="${'Welcome, ' + username}">Welcome, username</div>
     <div class="button-group">
         <button class="home" onclick="goHome()">
             <img src="/img/home.svg" alt="Home Icon">

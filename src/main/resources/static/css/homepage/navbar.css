@@ -1,27 +1,40 @@
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Space between left and right elements */
     align-items: center;
     background-color: #ffffff;
-    color: white;
+    color: black; /* Change to black for better visibility */
     padding: 10px 20px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.icon-container {
+    display: flex;
+    align-items: center; /* Center the icon vertically */
+    margin-right: 10px; /* Space between icon and username */
+}
+
+.cloud-icon {
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+}
+
 .navbar .username {
     font-size: 18px;
-    color: black;
     max-width: 600px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-left: 10px; /* Add margin to the left for spacing */
+    margin-right: auto; /* Allow margin to take up space to push buttons to the right */
 }
 
 .navbar .button-group {
     display: flex;
-    align-items: center;
+    align-items: center; /* Align buttons vertically */
 }
+
 
 .navbar .home, .navbar .logout {
     background-color: white;
