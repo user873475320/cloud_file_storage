@@ -23,6 +23,16 @@ table thead {
     vertical-align: middle;
 }
 
+.folder-name {
+    color: #007bff; /* Change to your desired color */
+    text-decoration: none; /* Remove underline */
+}
+
+.folder-name:hover {
+    color: #0056b3; /* Darker shade on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
 .type-icon {
     width: 20px;
     height: 20px;
