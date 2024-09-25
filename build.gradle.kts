@@ -37,6 +37,8 @@ dependencies {
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation("org.springframework.boot:spring-boot-starter-logging")
     implementation("redis.clients:jedis:4.2.3")
+    implementation("commons-io:commons-io:2.16.1")
+    implementation("io.minio:minio:8.5.12")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
