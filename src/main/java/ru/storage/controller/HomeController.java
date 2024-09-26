@@ -10,8 +10,6 @@ import ru.storage.dto.FileDTO;
 import ru.storage.dto.FolderDTO;
 import ru.storage.service.MinioService;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,14 +23,15 @@ public class HomeController {
 
     @GetMapping("/home")
     public String showHomePage(@RequestParam(value = "path", required = false) String currentPath, Model model, Principal principal) {
-        String decodedCurrentPath =  (currentPath == null) ? "" : URLDecoder.decode(currentPath, StandardCharsets.UTF_8);
-        Pair<List<FileDTO>, List<FolderDTO>> pair = minioService.findFilesInFolder(getUserRootFolderName(getUserDetails(principal)), decodedCurrentPath);
+        currentPath = (currentPath == null) ? "" : currentPath;
+        Pair<List<FileDTO>, List<FolderDTO>> pair = minioService.findFilesInFolder(getUserRootFolderName(getUserDetails(principal)), currentPath);
 
         model.addAttribute("username", getUserDetails(principal).getUsername());
         model.addAttribute("files", pair.getFirst());
         model.addAttribute("directories", pair.getSecond());
         model.addAttribute("breadcrumbFolders", getBreadcrumbsFolders(currentPath));
-        model.addAttribute("currentPath", decodedCurrentPath);
+        model.addAttribute("currentPath", currentPath);
+
         return "home_page";
     }
 }

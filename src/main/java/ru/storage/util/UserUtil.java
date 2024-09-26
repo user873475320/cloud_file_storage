@@ -4,8 +4,6 @@ import org.springframework.security.core.Authentication;
 import ru.storage.config.security.CustomUserDetails;
 import ru.storage.dto.FolderDTO;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
@@ -22,8 +20,7 @@ public class UserUtil {
             return new ArrayList<>();
         }
 
-        String decodedPath = URLDecoder.decode(currentPath, StandardCharsets.UTF_8);
-        Path fullPath = Paths.get(decodedPath);
+        Path fullPath = Paths.get(currentPath);
 
         return IntStream.range(0, fullPath.getNameCount())
                 .mapToObj(i -> {

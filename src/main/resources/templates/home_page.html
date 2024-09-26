@@ -37,7 +37,7 @@
             <a th:href="@{/home}">Root folder</a>
             <span>&gt;</span>
             <th:block th:each="folder, iterStat : ${breadcrumbFolders}">
-                <a th:href="@{/home(path=${folder.encodedPath})}" th:text="${folder.name}">Folder Name</a>
+                <a th:href="@{'/home?path=' + ${folder.getEncodedPath()}}" th:text="${folder.name}">Folder Name</a>
                 <span th:if="${!iterStat.last}">&gt;</span>
             </th:block>
         </div>
