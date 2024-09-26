@@ -11,7 +11,7 @@ function uploadFiles(files, currentPath) {
     formData.append('path', currentPath);
 
     // Send the form data to the server
-    fetch('/upload/file', { // Adjust this URL to your backend endpoint
+    fetch('/upload', { // Adjust this URL to your backend endpoint
         method: 'POST',
         body: formData
     })
@@ -40,7 +40,7 @@ function uploadFolder(files, currentPath) {
     formData.append('path', currentPath);
 
     // Send the form data to the server
-    fetch('/upload/folder', { // Adjust this URL to your backend endpoint
+    fetch('/upload', { // Adjust this URL to your backend endpoint
         method: 'POST',
         body: formData
     })
