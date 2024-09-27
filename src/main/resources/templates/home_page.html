@@ -60,10 +60,12 @@
     <input type="file" id="folder-input" webkitdirectory directory onchange="uploadFolder(this.files, currentPath)">
 
     <div class="search-container">
-        <div class="search-bar">
-            <img src="/img/search.svg" alt="search"/>
-            <input type="text" placeholder="Search Objects">
-        </div>
+        <form id="searchForm" class="search-bar" action="/search" method="GET"> <!-- Adjust action URL -->
+            <button type="submit" class="search-btn">
+                <img src="/img/search.svg" alt="search"/>
+            </button>
+            <input type="text" id="searchQuery" name="query" placeholder="Search Objects">
+        </form>
         <button class="btn delete-btn">Delete Selected</button>
     </div>
 
@@ -87,13 +89,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="dir : ${directories}">
+        <tr th:each="folder : ${folders}">
             <td><input type="checkbox"></td>
             <td>
                 <!-- File Icon -->
                 <img src="/img/folder.svg" alt="type-icon" class="type-icon">
                 <!-- File Name -->
-                <a class="folder-name" th:href="@{'/home?path=' + ${dir.getEncodedPath()}}" th:text="${dir.name}">Directory Name</a>
+                <a class="folder-name" th:href="@{'/home?path=' + ${folder.getEncodedPath()}}" th:text="${folder.name}">Folder Name</a>
             </td>
             <td></td>
             <td>-</td>
@@ -142,6 +144,8 @@
 <script src="/js/uploadHandler.js"></script>
 <script src="/js/dragDropHandler.js"></script>
 <script src="/js/navbarHandler.js"></script>
+<script src="/js/searchHandler.js"></script>
+
 
 <script th:inline="javascript">
     const currentPath = /*[[@{${currentPath}}]]*/ '';
