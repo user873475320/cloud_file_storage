@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Cloud Storage</title>
+    <link rel="stylesheet" href="/css/homepage/layout.css">
+    <link rel="stylesheet" href="/css/homepage/navbar.css">
+    <link rel="stylesheet" href="/css/homepage/searchBar.css">
+    <link rel="stylesheet" href="/css/homepage/table.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="icon-container">
+        <img src="/img/cloud.svg" alt="Cloud Icon" class="cloud-icon">
+    </div>
+    <div class="username" id="username" th:text="${'Welcome, ' + username}">Welcome, username</div>
+    <div class="button-group">
+        <button class="home" onclick="goHome()">
+            <img src="/img/home.svg" alt="Home Icon">
+        </button>
+        <button class="logout" onclick="logout()">
+            <img src="/img/log-out.svg" alt="Logout Icon">
+        </button>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="search-container">
+        <form id="searchForm" class="search-bar" action="/search" method="GET"> <!-- Adjust action URL -->
+            <button type="submit" class="search-btn">
+                <img src="/img/search.svg" alt="search"/>
+            </button>
+            <input type="text" id="searchQuery" name="query" placeholder="Search Objects">
+        </form>
+        <button class="btn delete-btn">Delete Selected</button>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Name</th>
+            <th>Last Modified</th>
+            <th>Size</th>
+            <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="folder : ${folders}">
+            <td><input type="checkbox"></td>
+            <td>
+                <!-- File Icon -->
+                <img src="/img/folder.svg" alt="type-icon" class="type-icon">
+                <!-- File Name -->
+                <a class="folder-name" th:href="@{'/home?path=' + ${folder.getEncodedPath()}}" th:text="${folder.name}">Folder Name</a>
+            </td>
+            <td></td>
+            <td>-</td>
+            <td class="options">
+                <button type="button" title="Rename">
+                    <img src="/img/edit-3.svg" alt="rename">
+                </button>
+                <!-- Download Button -->
+                <button type="button" title="Download">
+                    <img src="/img/download.svg" alt="download">
+                </button>
+                <!-- Delete Button -->
+                <button type="button" title="Delete">
+                    <img src="/img/trash-2.svg" alt="delete">
+                </button>
+            </td>
+        </tr>
+        <tr th:each="file : ${files}">
+            <td><input type="checkbox"></td>
+            <td>
+                <!-- File Icon -->
+                <img th:src="${'/img/' + file.icon.iconFileName}" alt="type-icon" class="type-icon">
+                <!-- File Name -->
+                <span class="file-name" th:text="${file.fileName}">File Name</span>
+            </td>
+            <td th:text="${file.lastModifiedDate}">Last Modified</td>
+            <td th:text="${file.size}">File Size</td>
+            <td class="options">
+                <button type="button" title="Go to folder" th:attr="onclick=|goToFileFolder('${file.getEncodedPathToFile()}')|">
+                    <img src="/img/corner-down-left.svg" alt="go-to-folder">
+                </button>
+                <button type="button" title="Rename">
+                    <img src="/img/edit-3.svg" alt="rename">
+                </button>
+                <!-- Download Button -->
+                <button type="button" title="Download">
+                    <img src="/img/download.svg" alt="download">
+                </button>
+                <!-- Delete Button -->
+                <button type="button" title="Delete">
+                    <img src="/img/trash-2.svg" alt="delete">
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/navbarHandler.js"></script>
+<script src="/js/searchHandler.js"></script>
+
+</body>
+</html>
