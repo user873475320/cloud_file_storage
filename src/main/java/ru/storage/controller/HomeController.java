@@ -21,14 +21,19 @@ public class HomeController {
 
     private final MinioService minioService;
 
+    @GetMapping("/")
+    public String showIndexPage() {
+        return "auth/index_page";
+    }
+
     @GetMapping("/home")
     public String showHomePage(@RequestParam(value = "path", required = false) String currentPath, Model model, Principal principal) {
         currentPath = (currentPath == null) ? "" : currentPath;
-        Pair<List<FileDTO>, List<FolderDTO>> pair = minioService.findFilesInFolder(getUserRootFolderName(getUserDetails(principal)), currentPath);
+        Pair<List<FileDTO>, List<FolderDTO>> pair = minioService.findFilesAndFoldersInFolder(getUserRootFolderName(getUserDetails(principal)), currentPath);
 
         model.addAttribute("username", getUserDetails(principal).getUsername());
         model.addAttribute("files", pair.getFirst());
-        model.addAttribute("directories", pair.getSecond());
+        model.addAttribute("folders", pair.getSecond());
         model.addAttribute("breadcrumbFolders", getBreadcrumbsFolders(currentPath));
         model.addAttribute("currentPath", currentPath);
 
